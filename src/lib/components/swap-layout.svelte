@@ -1,3 +1,4 @@
+<!-- src/lib/components/swap-layout.svelte -->
 <script lang="ts">
 	import { onMount, createEventDispatcher, type ComponentType } from 'svelte';
 	import { browser } from '$app/environment';
@@ -40,18 +41,12 @@
 
 	onMount(() => {
 		if (browser && containerElement) {
-			swapyInstance = createSwapy(containerElement);
-			swapyInstance.enable(isEditing);
-			swapyInstance.onSwap((event: any) => {
-				onSwap(event.data.object);
+			const swapy = createSwapy(containerElement);
+			swapy.onSwap(({ data }) => {
+				localStorage.setItem('dashSlotItems', JSON.stringify(data.object));
+				dispatch('swap', data.object);
 			});
 		}
-
-		return () => {
-			if (swapyInstance) {
-				swapyInstance.destroy?.();
-			}
-		};
 	});
 
 	$: if (swapyInstance) {

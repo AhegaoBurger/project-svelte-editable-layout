@@ -1,5 +1,7 @@
+<!-- src/routes/+page.svelte -->
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
 	import { UserNav } from '$lib/components/user-nav';
 	import { MainNav } from '$lib/components/main-nav';
 	import CalendarDateRangePicker from '$lib/components/date-range-picker.svelte';
@@ -10,9 +12,8 @@
 	import Stats from '$lib/components/stats.svelte';
 	import Overview from '$lib/components/overview.svelte';
 	import SwapLayout from '$lib/components/swap-layout.svelte';
-	import type { ComponentType } from 'svelte';
 
-	const sections: Record<string, ComponentType> = {
+	const sections = {
 		top: Stats,
 		center_left: Overview,
 		center_right: RecentSales,
@@ -57,7 +58,62 @@
 				{sectionSlotClassNames}
 				class="grid w-full grid-cols-2 grid-rows-5 gap-8"
 				on:swap={handleSwap}
-			/>
+			>
+				<svelte:fragment slot="top">
+					<Card.Root class="h-full flex-grow">
+						<Card.Header>
+							<Card.Title>Stats</Card.Title>
+						</Card.Header>
+						<Card.Content class="pl-2">
+							<Stats />
+						</Card.Content>
+					</Card.Root>
+				</svelte:fragment>
+
+				<svelte:fragment slot="center_left">
+					<Card.Root class="h-full flex-grow">
+						<Card.Header>
+							<Card.Title>Overview</Card.Title>
+						</Card.Header>
+						<Card.Content class="pl-2">
+							<Overview />
+						</Card.Content>
+					</Card.Root>
+				</svelte:fragment>
+
+				<svelte:fragment slot="center_right">
+					<Card.Root class="h-full flex-grow">
+						<Card.Header>
+							<Card.Title>Recent Sales</Card.Title>
+							<Card.Description>You made 265 sales this month.</Card.Description>
+						</Card.Header>
+						<Card.Content>
+							<RecentSales />
+						</Card.Content>
+					</Card.Root>
+				</svelte:fragment>
+
+				<svelte:fragment slot="bottom">
+					<Card.Root class="h-full flex-grow">
+						<Card.Header>
+							<Card.Title>Transactions</Card.Title>
+							<Card.Description>Recent transactions from your store.</Card.Description>
+						</Card.Header>
+						<Card.Content>
+							<Transactions />
+						</Card.Content>
+					</Card.Root>
+				</svelte:fragment>
+			</SwapLayout>
+			<Card.Root class="h-full flex-grow">
+				<Card.Header>
+					<Card.Title>Transactions</Card.Title>
+					<Card.Description>Recent transactions from your store.</Card.Description>
+				</Card.Header>
+				<Card.Content>
+					<Transactions />
+				</Card.Content>
+			</Card.Root>
 		</div>
 	</div>
 </main>

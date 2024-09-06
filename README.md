@@ -1,38 +1,67 @@
-# create-svelte
+# Svelte Editable Layout Dashboard
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This project is a Svelte implementation of a drag-and-drop editable dashboard layout. It's inspired by and based on the NextJS implementation by [olliethedev](https://github.com/olliethedev/dnd-dashboard).
 
-## Creating a project
+## Overview
 
-If you're seeing this, you've probably already done this step. Congrats!
+This dashboard allows users to rearrange different components of the interface by dragging and dropping them. It's built using Svelte and leverages the following technologies:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- [Svelte](https://svelte.dev/)
+- [SvelteKit](https://kit.svelte.dev/)
+- [Swapy](https://github.com/olliethedev/swapy) for drag-and-drop functionality
+- [shadcn-svelte](https://www.shadcn-svelte.com/) for UI components
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Features
 
-## Developing
+- Drag-and-drop interface for rearranging dashboard components
+- Responsive design
+- Customizable layout sections
+- Edit mode toggle for enabling/disabling drag-and-drop
+- Persistent layout saving using local storage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Getting Started
 
-```bash
-npm run dev
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/svelte-editable-layout-dashboard.git
+   ```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+2. Navigate to the project directory:
+   ```
+   cd svelte-editable-layout-dashboard
+   ```
 
-## Building
+3. Install dependencies:
+   ```
+   npm install
+   ```
 
-To create a production version of your app:
+4. Run the development server:
+   ```
+   npm run dev
+   ```
 
-```bash
-npm run build
-```
+5. Open your browser and visit `http://localhost:5000`
 
-You can preview the production build with `npm run preview`.
+## Project Structure
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- `src/routes/+page.svelte`: Main dashboard page
+- `src/lib/components/swap-layout.svelte`: SwapLayout component for drag-and-drop functionality
+- `src/lib/components/edit-switch.svelte`: Toggle switch for edit mode
+- `src/lib/components/ui/`: UI components from shadcn-svelte
+
+## Customization
+
+You can customize the dashboard by modifying the sections in `src/routes/+page.svelte`. Each section is defined as a Svelte component and can be easily replaced or modified.
+
+## Credits
+
+This project is a Svelte adaptation of the [dnd-dashboard](https://github.com/olliethedev/dnd-dashboard) by [olliethedev](https://github.com/olliethedev). The original implementation was built using NextJS, and this project aims to bring similar functionality to the Svelte ecosystem.
+
+## License
+
+[MIT License](LICENSE)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
