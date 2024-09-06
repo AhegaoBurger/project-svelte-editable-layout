@@ -8,7 +8,7 @@ This dashboard allows users to rearrange different components of the interface b
 
 - [Svelte](https://svelte.dev/)
 - [SvelteKit](https://kit.svelte.dev/)
-- [Swapy](https://github.com/olliethedev/swapy) for drag-and-drop functionality
+- [Swapy](https://swapy.tahazsh.com/) for drag-and-drop functionality
 - [shadcn-svelte](https://www.shadcn-svelte.com/) for UI components
 
 ## Features
