@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { onMount, createEventDispatcher, SvelteComponent } from 'svelte';
+	import { onMount, createEventDispatcher, type SvelteComponent } from 'svelte';
+	import { browser } from '$app/environment';
 	import { createSwapy } from 'swapy';
 	import EditSwitch from './edit-switch.svelte';
 
@@ -26,23 +27,30 @@
 
 	const dispatch = createEventDispatcher();
 
-	// Load layout from localStorage
-	$: slotItems = JSON.parse(localStorage.getItem('dashSlotItems') || JSON.stringify(DEFAULT));
+	$: slotItems = browser
+		? JSON.parse(localStorage.getItem('dashSlotItems') || JSON.stringify(DEFAULT))
+		: DEFAULT;
 
 	function onSwap(object: Record<string, string | null>) {
-		localStorage.setItem('dashSlotItems', JSON.stringify(object));
+		if (browser) {
+			localStorage.setItem('dashSlotItems', JSON.stringify(object));
+		}
 		dispatch('swap', object);
 	}
 
 	onMount(() => {
-		swapyInstance = createSwapy(containerElement);
-		swapyInstance.enable(isEditing);
-		swapyInstance.onSwap((event) => {
-			onSwap(event.data.object);
-		});
+		if (browser && containerElement) {
+			swapyInstance = createSwapy(containerElement);
+			swapyInstance.enable(isEditing);
+			swapyInstance.onSwap((event) => {
+				onSwap(event.data.object);
+			});
+		}
 
 		return () => {
-			swapyInstance.destroy();
+			if (swapyInstance) {
+				swapyInstance.destroy();
+			}
 		};
 	});
 

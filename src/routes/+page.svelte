@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	import { Button } from '$lib/components/ui/button';
 	import {
 		Card,
@@ -7,90 +9,34 @@
 		CardHeader,
 		CardTitle
 	} from '$lib/components/ui/card';
-
-	// navigation components
 	import { UserNav } from '$lib/components/user-nav';
 	import { MainNav } from '$lib/components/main-nav';
-	import { CalendarDateRangePicker } from '$lib/components/date-range-picker';
-
-	// high level components
+	import CalendarDateRangePicker from '$lib/components/date-range-picker.svelte';
 	import Search from '$lib/components/search.svelte';
 	import TeamSwitcher from '$lib/components/team-switcher.svelte';
 	import RecentSales from '$lib/components/recent-sales.svelte';
 	import Transactions from '$lib/components/transactions.svelte';
 	import Stats from '$lib/components/stats.svelte';
 	import Overview from '$lib/components/overview.svelte';
+	import SwapLayout from '$lib/components/swap-layout.svelte';
 
-	// Skeleton loaders
-	// import StatsLoader from '$lib/components/stats-loader.svelte';
-	// import SwapLayoutLoader from '$lib/components/swap-layout-loader.svelte';
-	// import OverviewLoader from '$lib/components/overview-loader.svelte';
-	// import RecentSalesLoader from '$lib/components/recent-sales-loader.svelte';
-	// import TransactionsLoader from '$lib/components/transactions-loader.svelte';
-
-	// this is the initial layout of the swap layout.
-	const initialSwapSections = {
-		top: (
-			<Card class="h-full flex-grow">
-				<CardHeader>
-					<CardTitle>Stats</CardTitle>
-				</CardHeader>
-				<CardContent class="pl-2">
-					<Suspense key={'stats'} fallback={<StatsLoader />}>
-						<Stats />
-					</Suspense>
-				</CardContent>
-			</Card>
-		),
-		center_left: (
-			<Card class="h-full flex-grow">
-				<CardHeader>
-					<CardTitle>Overview</CardTitle>
-				</CardHeader>
-				<CardContent class="pl-2">
-					<Suspense key={'overview'} fallback={<OverviewLoader />}>
-						<Overview />
-					</Suspense>
-				</CardContent>
-			</Card>
-		),
-		center_right: (
-			<Card class="h-full flex-grow">
-				<CardHeader>
-					<CardTitle>Recent Sales</CardTitle>
-					<CardDescription>You made 265 sales this month.</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<Suspense key={'recent-sales'} fallback={<RecentSalesLoader />}>
-						<RecentSales />
-					</Suspense>
-				</CardContent>
-			</Card>
-		),
-		bottom: (
-			<Card class="h-full flex-grow">
-				<CardHeader class="flex flex-row items-center">
-					<div class="grid gap-2">
-						<CardTitle>Transactions</CardTitle>
-						<CardDescription>Recent transactions from your store.</CardDescription>
-					</div>
-				</CardHeader>
-				<CardContent>
-					<Suspense key={'transactions'} fallback={<TransactionsLoader />}>
-						<Transactions />
-					</Suspense>
-				</CardContent>
-			</Card>
-		)
+	const sections = {
+		top: Stats,
+		center_left: Overview,
+		center_right: RecentSales,
+		bottom: Transactions
 	};
 
-	// this is the class names for the sections of the swap layout.
-	const sectionSlotclasss = {
+	const sectionSlotClassNames = {
 		'1': 'col-span-2 row-span-1 h-full w-full flex flex-col',
 		'2': 'col-span-1 row-span-2 h-full w-full flex flex-col',
 		'3': 'col-span-1 row-span-2 h-full w-full flex flex-col',
 		'4': 'col-span-2 row-span-2 h-full w-full flex flex-col'
 	};
+
+	function handleSwap(event) {
+		console.log('Layout swapped:', event.detail);
+	}
 </script>
 
 <main class="p-y-4 flex min-h-screen flex-col items-center justify-between">
@@ -115,9 +61,10 @@
 			</div>
 			<SwapLayout
 				defaultEditing={false}
-				sections={initialSwapSections}
-				{sectionSlotclasss}
+				{sections}
+				{sectionSlotClassNames}
 				class="grid w-full grid-cols-2 grid-rows-5 gap-8"
+				on:swap={handleSwap}
 			/>
 		</div>
 	</div>

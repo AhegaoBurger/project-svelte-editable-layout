@@ -43,7 +43,7 @@
 		"lucide-svelte": "^0.439.0",
 		"svelte-chartjs": "^3.1.5",
 		"svelte-radix": "^1.1.1",
-		"swappy": "^0.0.0",
+		"swapy": "^0.1.2",
 		"tailwind-merge": "^2.5.2",
 		"tailwind-variants": "^0.2.1"
 	}

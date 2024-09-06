@@ -5,7 +5,7 @@
 <div class="space-y-8">
 	<div class="flex items-center">
 		<Avatar class="h-9 w-9">
-			<AvatarImage src="/avatars/01.png" alt="Avatar" />
+			<AvatarImage src="/src/public/avatars/01.png" alt="Avatar" />
 			<AvatarFallback>OM</AvatarFallback>
 		</Avatar>
 		<div class="ml-4 space-y-1">
@@ -16,7 +16,7 @@
 	</div>
 	<div class="flex items-center">
 		<Avatar class="flex h-9 w-9 items-center justify-center space-y-0 border">
-			<AvatarImage src="/avatars/02.png" alt="Avatar" />
+			<AvatarImage src="/src/public/avatars/02.png" alt="Avatar" />
 			<AvatarFallback>JL</AvatarFallback>
 		</Avatar>
 		<div class="ml-4 space-y-1">
@@ -27,7 +27,7 @@
 	</div>
 	<div class="flex items-center">
 		<Avatar class="h-9 w-9">
-			<AvatarImage src="/avatars/03.png" alt="Avatar" />
+			<AvatarImage src="/src/public/avatars/03.png" alt="Avatar" />
 			<AvatarFallback>IN</AvatarFallback>
 		</Avatar>
 		<div class="ml-4 space-y-1">
@@ -38,7 +38,7 @@
 	</div>
 	<div class="flex items-center">
 		<Avatar class="h-9 w-9">
-			<AvatarImage src="/avatars/04.png" alt="Avatar" />
+			<AvatarImage src="/src/public/avatars/04.png" alt="Avatar" />
 			<AvatarFallback>WK</AvatarFallback>
 		</Avatar>
 		<div class="ml-4 space-y-1">
@@ -49,8 +49,8 @@
 	</div>
 	<div class="flex items-center">
 		<Avatar class="h-9 w-9">
-			<AvatarImage src="/avatars/05.png" alt="Avatar" />
-			<AvatarFallback>SD</AvatarFallback>
+			<AvatarImage src="/src/public/avatars/05.png" alt="Avatar" />
+			<AvatarFallback>WK</AvatarFallback>
 		</Avatar>
 		<div class="ml-4 space-y-1">
 			<p class="text-sm font-medium leading-none">Sofia Davis</p>
