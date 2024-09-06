@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, createEventDispatcher, type SvelteComponent } from 'svelte';
+	import { onMount, createEventDispatcher, type ComponentType } from 'svelte';
 	import { browser } from '$app/environment';
 	import { createSwapy } from 'swapy';
 	import EditSwitch from './edit-switch.svelte';
@@ -14,7 +14,7 @@
 	};
 
 	export let sections: {
-		[key in SectionKey]: SvelteComponent;
+		[key in SectionKey]: ComponentType;
 	};
 	export let sectionSlotClassNames: {
 		[key in keyof typeof DEFAULT]: string;
@@ -42,14 +42,14 @@
 		if (browser && containerElement) {
 			swapyInstance = createSwapy(containerElement);
 			swapyInstance.enable(isEditing);
-			swapyInstance.onSwap((event) => {
+			swapyInstance.onSwap((event: any) => {
 				onSwap(event.data.object);
 			});
 		}
 
 		return () => {
 			if (swapyInstance) {
-				swapyInstance.destroy();
+				swapyInstance.destroy?.();
 			}
 		};
 	});
@@ -57,13 +57,21 @@
 	$: if (swapyInstance) {
 		swapyInstance.enable(isEditing);
 	}
+
+	function getClassName(slotId: string): string {
+		return sectionSlotClassNames[slotId as keyof typeof sectionSlotClassNames] || '';
+	}
+
+	function getComponent(sectionKey: string): ComponentType {
+		return sections[sectionKey as SectionKey];
+	}
 </script>
 
-<EditSwitch bind:checked={isEditing} />
+<EditSwitch bind:checked={isEditing} {defaultEditing} />
 
 <div bind:this={containerElement} id="swap-layout" {...$$restProps}>
 	{#each Object.entries(slotItems) as [slotId, sectionKey]}
-		<div data-swapy-slot={slotId} class={sectionSlotClassNames[slotId]}>
+		<div data-swapy-slot={slotId} class={getClassName(slotId)}>
 			<div data-swapy-item={sectionKey} class="h-full">
 				{#if isEditing}
 					<span
@@ -77,7 +85,7 @@
 						</svg>
 					</span>
 				{/if}
-				<svelte:component this={sections[sectionKey]} />
+				<svelte:component this={getComponent(sectionKey)} />
 			</div>
 		</div>
 	{/each}

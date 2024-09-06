@@ -1,14 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
 	import { Button } from '$lib/components/ui/button';
-	import {
-		Card,
-		CardContent,
-		CardDescription,
-		CardHeader,
-		CardTitle
-	} from '$lib/components/ui/card';
 	import { UserNav } from '$lib/components/user-nav';
 	import { MainNav } from '$lib/components/main-nav';
 	import CalendarDateRangePicker from '$lib/components/date-range-picker.svelte';
@@ -19,8 +10,9 @@
 	import Stats from '$lib/components/stats.svelte';
 	import Overview from '$lib/components/overview.svelte';
 	import SwapLayout from '$lib/components/swap-layout.svelte';
+	import type { ComponentType } from 'svelte';
 
-	const sections = {
+	const sections: Record<string, ComponentType> = {
 		top: Stats,
 		center_left: Overview,
 		center_right: RecentSales,
@@ -34,7 +26,7 @@
 		'4': 'col-span-2 row-span-2 h-full w-full flex flex-col'
 	};
 
-	function handleSwap(event) {
+	function handleSwap(event: CustomEvent<Record<string, string | null>>) {
 		console.log('Layout swapped:', event.detail);
 	}
 </script>

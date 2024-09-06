@@ -16,6 +16,6 @@
 </script>
 
 <div class="flex items-center space-x-2">
-	<Switch {checked} id="edit-mode" on:change={handleChange} />
+	<Switch bind:checked id="edit-mode" on:change={handleChange} />
 	<Label for="edit-mode">Enable Edit Mode</Label>
 </div>
