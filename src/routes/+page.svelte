@@ -21,10 +21,10 @@
 	};
 
 	const sectionSlotClassNames = {
-		'1': 'col-span-2 row-span-1 h-full w-full flex flex-col',
-		'2': 'col-span-1 row-span-2 h-full w-full flex flex-col',
-		'3': 'col-span-1 row-span-2 h-full w-full flex flex-col',
-		'4': 'col-span-2 row-span-2 h-full w-full flex flex-col'
+		'1': 'col-span-2 row-span-1 h-full w-full',
+		'2': 'col-span-1 row-span-2 h-full w-full',
+		'3': 'col-span-1 row-span-2 h-full w-full',
+		'4': 'col-span-2 row-span-2 h-full w-full'
 	};
 
 	function handleSwap(event: CustomEvent<Record<string, string | null>>) {
@@ -54,12 +54,11 @@
 			</div>
 			<SwapLayout
 				defaultEditing={false}
-				{sections}
 				{sectionSlotClassNames}
 				class="grid w-full grid-cols-2 grid-rows-5 gap-8"
 				on:swap={handleSwap}
 			>
-				<svelte:fragment slot="top">
+				<!-- <svelte:fragment slot="top">
 					<Card.Root class="h-full flex-grow">
 						<Card.Header>
 							<Card.Title>Stats</Card.Title>
@@ -103,7 +102,45 @@
 							<Transactions />
 						</Card.Content>
 					</Card.Root>
-				</svelte:fragment>
+				</svelte:fragment> -->
+
+				<Card.Root slot="top" class="h-full">
+					<Card.Header>
+						<Card.Title>Stats</Card.Title>
+					</Card.Header>
+					<Card.Content class="pl-2">
+						<Stats />
+					</Card.Content>
+				</Card.Root>
+
+				<Card.Root slot="center_left" class="h-full">
+					<Card.Header>
+						<Card.Title>Overview</Card.Title>
+					</Card.Header>
+					<Card.Content class="pl-2">
+						<Overview />
+					</Card.Content>
+				</Card.Root>
+
+				<Card.Root slot="center_right" class="h-full">
+					<Card.Header>
+						<Card.Title>Recent Sales</Card.Title>
+						<Card.Description>You made 265 sales this month.</Card.Description>
+					</Card.Header>
+					<Card.Content>
+						<RecentSales />
+					</Card.Content>
+				</Card.Root>
+
+				<Card.Root slot="bottom" class="h-full">
+					<Card.Header>
+						<Card.Title>Transactions</Card.Title>
+						<Card.Description>Recent transactions from your store.</Card.Description>
+					</Card.Header>
+					<Card.Content>
+						<Transactions />
+					</Card.Content>
+				</Card.Root>
 			</SwapLayout>
 			<Card.Root class="h-full flex-grow">
 				<Card.Header>

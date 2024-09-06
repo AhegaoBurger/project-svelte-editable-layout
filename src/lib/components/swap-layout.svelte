@@ -1,6 +1,5 @@
-<!-- src/lib/components/swap-layout.svelte -->
 <script lang="ts">
-	import { onMount, createEventDispatcher, type ComponentType } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 	import { browser } from '$app/environment';
 	import { createSwapy } from 'swapy';
 	import EditSwitch from './edit-switch.svelte';
@@ -14,16 +13,12 @@
 		'4': 'bottom' as SectionKey
 	};
 
-	export let sections: {
-		[key in SectionKey]: ComponentType;
-	};
 	export let sectionSlotClassNames: {
 		[key in keyof typeof DEFAULT]: string;
 	};
 	export let defaultEditing: boolean;
 
 	let isEditing = defaultEditing;
-	let swapyInstance: ReturnType<typeof createSwapy>;
 	let containerElement: HTMLElement;
 
 	const dispatch = createEventDispatcher();
@@ -31,13 +26,6 @@
 	$: slotItems = browser
 		? JSON.parse(localStorage.getItem('dashSlotItems') || JSON.stringify(DEFAULT))
 		: DEFAULT;
-
-	function onSwap(object: Record<string, string | null>) {
-		if (browser) {
-			localStorage.setItem('dashSlotItems', JSON.stringify(object));
-		}
-		dispatch('swap', object);
-	}
 
 	onMount(() => {
 		if (browser && containerElement) {
@@ -49,16 +37,8 @@
 		}
 	});
 
-	$: if (swapyInstance) {
-		swapyInstance.enable(isEditing);
-	}
-
 	function getClassName(slotId: string): string {
 		return sectionSlotClassNames[slotId as keyof typeof sectionSlotClassNames] || '';
-	}
-
-	function getComponent(sectionKey: string): ComponentType {
-		return sections[sectionKey as SectionKey];
 	}
 </script>
 
@@ -67,11 +47,11 @@
 <div bind:this={containerElement} id="swap-layout" {...$$restProps}>
 	{#each Object.entries(slotItems) as [slotId, sectionKey]}
 		<div data-swapy-slot={slotId} class={getClassName(slotId)}>
-			<div data-swapy-item={sectionKey} class="h-full">
+			<div data-swapy-item={sectionKey} class="relative h-full">
 				{#if isEditing}
 					<span
 						data-swapy-handle
-						class="absolute z-10 box-border flex flex-grow cursor-move items-center rounded-sm bg-slate-200 p-1"
+						class="absolute left-0 top-0 z-10 box-border flex flex-grow cursor-move items-center rounded-sm bg-slate-200 p-1"
 					>
 						<svg y="0px" viewBox="0 0 511.987 511.987" width="16" height="16">
 							<path
@@ -80,7 +60,15 @@
 						</svg>
 					</span>
 				{/if}
-				<svelte:component this={getComponent(sectionKey)} />
+				{#if sectionKey === 'top'}
+					<slot name="top" />
+				{:else if sectionKey === 'center_left'}
+					<slot name="center_left" />
+				{:else if sectionKey === 'center_right'}
+					<slot name="center_right" />
+				{:else if sectionKey === 'bottom'}
+					<slot name="bottom" />
+				{/if}
 			</div>
 		</div>
 	{/each}
