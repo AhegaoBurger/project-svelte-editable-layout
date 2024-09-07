@@ -131,16 +131,6 @@
 						<RecentSales />
 					</Card.Content>
 				</Card.Root>
-
-				<Card.Root slot="bottom" class="h-full">
-					<Card.Header>
-						<Card.Title>Transactions</Card.Title>
-						<Card.Description>Recent transactions from your store.</Card.Description>
-					</Card.Header>
-					<Card.Content>
-						<Transactions />
-					</Card.Content>
-				</Card.Root>
 			</SwapLayout>
 			<Card.Root class="h-full flex-grow">
 				<Card.Header>
